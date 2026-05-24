@@ -1,0 +1,194 @@
+@if (product(); as p) {
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav container" aria-label="Navegación de ruta">
+    <ol class="breadcrumb" role="list">
+      <li><a routerLink="/">Inicio</a></li>
+      <li aria-hidden="true">›</li>
+      <li><a routerLink="/catalogo">Catálogo</a></li>
+      <li aria-hidden="true">›</li>
+      <li aria-current="page">{{ p.name }}</li>
+    </ol>
+  </nav>
+
+  <!-- Product section -->
+  <section class="product-section section" [attr.aria-label]="p.name">
+    <div class="container">
+      <div class="product-layout">
+
+        <!-- Image -->
+        <div class="product-gallery">
+          <div class="product-main-img">
+            <img [src]="p.image" [alt]="p.name" loading="eager">
+          </div>
+          <div class="product-badges-side">
+            @for (tag of p.tags; track tag) {
+              <span class="badge badge-salvia">{{ tag }}</span>
+            }
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-info">
+          <div class="product-category-tag">
+            <span class="badge badge-cacao">{{ p.category }}</span>
+          </div>
+
+          <h1 class="product-title">{{ p.name }}</h1>
+
+          <p class="product-short-desc">{{ p.shortDescription }}</p>
+
+          <!-- Nutrition highlight -->
+          <div class="nutrition-highlight" role="region" aria-label="Información nutricional destacada">
+            <div class="nutrition-item">
+              <span class="nutrition-value">{{ p.netCarbs }} g</span>
+              <span class="nutrition-label">Carbs netos</span>
+              <span class="nutrition-sub">{{ p.portionSize }}</span>
+            </div>
+            <div class="nutrition-divider" aria-hidden="true"></div>
+            <div class="nutrition-item">
+              <span class="nutrition-value">0 g</span>
+              <span class="nutrition-label">Azúcar añadida</span>
+              <span class="nutrition-sub">Eritritol natural</span>
+            </div>
+            <div class="nutrition-divider" aria-hidden="true"></div>
+            <div class="nutrition-item">
+              <span class="nutrition-value">100%</span>
+              <span class="nutrition-label">Artesanal</span>
+              <span class="nutrition-sub">Sin conservantes</span>
+            </div>
+          </div>
+
+          <!-- Variants -->
+          <fieldset class="variants-group">
+            <legend class="variants-label">Selecciona una opción:</legend>
+            <div class="variants-options" role="radiogroup">
+              @for (variant of p.variants; track variant.label; let i = $index) {
+                <label
+                  class="variant-option"
+                  [class.selected]="selectedVariant() === i"
+                  [attr.for]="'variant-' + i"
+                >
+                  <input
+                    type="radio"
+                    [id]="'variant-' + i"
+                    name="variant"
+                    [value]="i"
+                    [checked]="selectedVariant() === i"
+                    (change)="selectVariant(i)"
+                    class="sr-only"
+                  >
+                  <div class="variant-content">
+                    <span class="variant-label-text">{{ variant.label }}</span>
+                    <span class="variant-price">Bs {{ variant.price }}</span>
+                  </div>
+                </label>
+              }
+            </div>
+          </fieldset>
+
+          <!-- Price -->
+          <div class="product-price-block">
+            <div class="product-price-main">
+              <span class="price-currency-lg">Bs</span>
+              <span class="price-amount-lg">{{ selectedPrice() }}</span>
+            </div>
+            <span class="price-note">Precio incluye embalaje</span>
+          </div>
+
+          <!-- CTA -->
+          <div class="product-cta">
+            <a
+              [href]="getWhatsAppUrl(p)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-salvia btn-lg product-whatsapp-btn"
+              id="product-whatsapp-order"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              Pedir por WhatsApp
+            </a>
+            <a routerLink="/catalogo" class="btn btn-secondary" id="product-back-catalog">
+              Ver catálogo
+            </a>
+          </div>
+
+          <!-- Delivery -->
+          <div class="product-delivery-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Entrega en Santa Cruz · Pedidos antes de las 2 PM = entrega el mismo día
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Description & Ingredients -->
+  <section class="details-section section" aria-labelledby="details-heading">
+    <div class="container">
+      <div class="details-layout">
+        <div class="detail-block">
+          <h2 id="details-heading">Descripción del producto</h2>
+          <p>{{ p.fullDescription }}</p>
+        </div>
+        <div class="detail-block">
+          <h2>Ingredientes principales</h2>
+          <ul class="ingredients-list" role="list">
+            @for (ing of p.ingredients; track ing) {
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ ing }}
+              </li>
+            }
+          </ul>
+          <div class="allergen-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Elaborado en instalaciones que pueden contener trazas de frutos secos y huevo.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related products -->
+  @if (relatedProducts().length > 0) {
+    <section class="related-section section" aria-labelledby="related-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">También te puede interesar</p>
+          <h2 id="related-heading">Otros productos Vitta Dulce</h2>
+        </div>
+        <div class="related-grid">
+          @for (rp of relatedProducts(); track rp.id) {
+            <article class="related-card">
+              <a [routerLink]="['/producto', rp.id]" class="related-card-img" [attr.aria-label]="'Ver ' + rp.name">
+                <img [src]="rp.image" [alt]="rp.name" loading="lazy">
+              </a>
+              <div class="related-card-body">
+                <h3><a [routerLink]="['/producto', rp.id]">{{ rp.name }}</a></h3>
+                <div class="related-price">
+                  <span class="price-currency">Bs</span>
+                  <span class="price-amount">{{ rp.price }}</span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+} @else {
+  <div class="not-found section container">
+    <h1>Producto no encontrado</h1>
+    <p>El producto que buscas no existe o no está disponible.</p>
+    <a routerLink="/catalogo" class="btn btn-primary" id="not-found-back">Ver catálogo</a>
+  </div>
+}

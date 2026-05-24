@@ -1,0 +1,247 @@
+<!-- ========== HERO SECTION ========== -->
+<section class="hero" aria-label="Sección principal">
+  <div class="hero-bg">
+    <img
+      src="/hero-banner.png"
+      alt="Repostería keto artesanal Vitta Dulce — tortas y postres saludables"
+      class="hero-img"
+    />
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content container">
+    <div class="hero-badge">
+      <span>🌿</span>
+      <span>Repostería Keto · Santa Cruz, Bolivia</span>
+    </div>
+    <h1 class="hero-title">
+      Sabores que<br>
+      <em>acompañan</em><br>
+      tu equilibrio
+    </h1>
+    <p class="hero-desc">
+      Postres artesanales sin azúcar para personas con diabetes, prediabetes
+      o que simplemente eligen cuidarse. Porque cuidarse también es disfrutar.
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/catalogo" class="btn btn-primary btn-lg" id="hero-cta-catalogo">
+        Ver catálogo
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a routerLink="/nosotros" class="btn btn-secondary btn-lg" id="hero-cta-nosotros">
+        Nuestra historia
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">&lt;2,5 g</span>
+        <span class="stat-label">Carbs netos por porción</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Sin azúcar añadida</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat">
+        <span class="stat-number">4</span>
+        <span class="stat-label">Productos artesanales</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CATEGORIES ========== -->
+<section class="categories-section section" aria-labelledby="categories-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">Explora por categoría</p>
+      <h2 id="categories-heading">¿Qué se te antoja hoy?</h2>
+    </div>
+    <div class="categories-grid">
+      @for (cat of categories; track cat.label) {
+        <a
+          [routerLink]="cat.route"
+          [queryParams]="cat.query"
+          class="category-card"
+          [attr.aria-label]="'Ver productos de ' + cat.label"
+        >
+          <span class="category-icon" aria-hidden="true">{{ cat.icon }}</span>
+          <span class="category-label">{{ cat.label }}</span>
+          <span class="category-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ========== BENEFITS ========== -->
+<section class="benefits-section section" aria-labelledby="benefits-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">Por qué elegirnos</p>
+      <h2 id="benefits-heading">Indulgencia consciente, sin concesiones</h2>
+      <p class="section-desc">
+        En Vitta Dulce creamos postres que respetan tu salud sin sacrificar el sabor ni la textura. Cada ingrediente tiene un porqué.
+      </p>
+    </div>
+    <div class="benefits-grid">
+      @for (b of benefits; track b.title) {
+        <article class="benefit-card">
+          <div class="benefit-icon" [innerHTML]="b.icon"></div>
+          <h3>{{ b.title }}</h3>
+          <p>{{ b.desc }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURED PRODUCTS ========== -->
+<section class="products-section section" aria-labelledby="products-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">Nuestros productos</p>
+      <h2 id="products-heading">La repostería que cuida tu salud</h2>
+    </div>
+    <div class="products-grid">
+      @for (product of featuredProducts; track product.id) {
+        <article class="product-card">
+          <a [routerLink]="['/producto', product.id]" class="product-card-img-link" [attr.aria-label]="'Ver ' + product.name">
+            <div class="product-card-img">
+              <img [src]="product.image" [alt]="product.name" loading="lazy">
+              <div class="product-card-overlay">
+                <span>Ver producto</span>
+              </div>
+            </div>
+          </a>
+          <div class="product-card-body">
+            <div class="product-card-tags">
+              <span class="badge badge-salvia">Keto</span>
+              <span class="badge badge-cacao">{{ product.netCarbs }} g carbs</span>
+            </div>
+            <h3 class="product-card-name">
+              <a [routerLink]="['/producto', product.id]">{{ product.name }}</a>
+            </h3>
+            <p class="product-card-desc">{{ product.shortDescription }}</p>
+            <div class="product-card-footer">
+              <div class="product-price">
+                <span class="price-currency">Bs</span>
+                <span class="price-amount">{{ product.price }}</span>
+                <span class="price-unit">/ {{ product.unit }}</span>
+              </div>
+              <a
+                [routerLink]="['/producto', product.id]"
+                class="btn btn-primary"
+                [attr.aria-label]="'Ver detalles de ' + product.name"
+                [id]="'btn-product-' + product.id"
+              >
+                Ver más
+              </a>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+    <div class="products-cta">
+      <a routerLink="/catalogo" class="btn btn-secondary btn-lg" id="home-ver-catalogo">
+        Ver catálogo completo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHO IS IT FOR ========== -->
+<section class="audience-section section" aria-labelledby="audience-heading">
+  <div class="container">
+    <div class="audience-inner">
+      <div class="audience-text">
+        <p class="section-eyebrow">¿Para quién es Vitta Dulce?</p>
+        <h2 id="audience-heading">Para quienes cuidan su salud sin renunciar al placer</h2>
+        <p>
+          Nuestros productos están pensados especialmente para personas con <strong>diabetes tipo 2</strong>,
+          <strong>prediabetes</strong> o <strong>sobrepeso</strong> que desean disfrutar de un postre
+          sin el miedo a disparar su glucosa.
+        </p>
+        <p>
+          Pero también para cualquier persona que elija una alimentación más consciente, sin sacrificar
+          los momentos de celebración en familia o entre amigos.
+        </p>
+        <ul class="audience-list" role="list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Personas con diabetes tipo 2 o prediabetes
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Quienes siguen dieta keto o baja en carbohidratos
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Familias que quieren celebrar sin exclusiones
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Adultos 35–65 años conscientes de su alimentación
+          </li>
+        </ul>
+        <a routerLink="/nosotros" class="btn btn-primary" id="home-nosotros-link">Conocer nuestra historia</a>
+      </div>
+      <div class="audience-visual" aria-hidden="true">
+        <div class="audience-card">
+          <div class="audience-quote">
+            "Por primera vez pude compartir mi torta de cumpleaños con la familia sin preocuparme por mi glucosa."
+          </div>
+          <div class="audience-author">
+            <div class="author-avatar">M</div>
+            <div>
+              <strong>María, 52 años</strong>
+              <span>Paciente con diabetes tipo 2</span>
+            </div>
+          </div>
+        </div>
+        <div class="audience-card audience-card-2">
+          <div class="audience-quote">
+            "El pan keto me cambió el desayuno. Sabe real y no me da picos de azúcar."
+          </div>
+          <div class="audience-author">
+            <div class="author-avatar">R</div>
+            <div>
+              <strong>Roberto, 48 años</strong>
+              <span>Dieta keto desde 2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHATSAPP BANNER ========== -->
+<section class="whatsapp-banner" aria-labelledby="whatsapp-heading">
+  <div class="container">
+    <div class="whatsapp-inner">
+      <div class="whatsapp-text">
+        <h2 id="whatsapp-heading">¿Listo para hacer tu pedido?</h2>
+        <p>Escríbenos por WhatsApp y te respondemos en minutos. Entregamos en toda Santa Cruz de la Sierra.</p>
+      </div>
+      <a
+        href="https://wa.me/59170000000?text=Hola%2C%20me%20interesa%20hacer%20un%20pedido%20de%20Vitta%20Dulce"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-salvia btn-lg"
+        id="home-whatsapp-cta"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Pedir por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
