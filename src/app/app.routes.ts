@@ -23,6 +23,24 @@ export const routes: Routes = [
     title: 'Quiénes Somos — Vitta Dulce',
   },
   {
+    path: 'politica-envio',
+    loadComponent: () =>
+      import('./pages/policies/shipping/shipping').then((m) => m.ShippingComponent),
+    title: 'Política de Envío — Vitta Dulce',
+  },
+  {
+    path: 'devoluciones',
+    loadComponent: () =>
+      import('./pages/policies/returns/returns').then((m) => m.ReturnsComponent),
+    title: 'Política de Devoluciones — Vitta Dulce',
+  },
+  {
+    path: 'privacidad',
+    loadComponent: () =>
+      import('./pages/policies/privacy/privacy').then((m) => m.PrivacyComponent),
+    title: 'Política de Privacidad — Vitta Dulce',
+  },
+  {
     path: '**',
     redirectTo: '',
   },

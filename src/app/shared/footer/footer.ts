@@ -211,13 +211,13 @@ import { RouterLink } from '@angular/router';
           <h3>Políticas</h3>
           <ul>
             <li>
-              <a routerLink="/" fragment="envio">Política de Envío</a>
+              <a routerLink="/politica-envio">Política de Envío</a>
             </li>
             <li>
-              <a routerLink="/" fragment="devoluciones">Devoluciones</a>
+              <a routerLink="/devoluciones">Devoluciones</a>
             </li>
             <li>
-              <a routerLink="/" fragment="privacidad">Privacidad</a>
+              <a routerLink="/privacidad">Privacidad</a>
             </li>
           </ul>
           <div style="margin-top: var(--space-5);">
@@ -266,9 +266,9 @@ import { RouterLink } from '@angular/router';
       <div class="footer-bottom">
         <p>© 2025 Vitta Dulce. Todos los derechos reservados.</p>
         <nav class="footer-bottom-links" aria-label="Políticas legales">
-          <a routerLink="/" fragment="privacidad">Privacidad</a>
-          <a routerLink="/" fragment="terminos">Términos</a>
-          <a routerLink="/" fragment="cookies">Cookies</a>
+          <a routerLink="/privacidad">Privacidad</a>
+          <a routerLink="/privacidad">Términos</a>
+          <a routerLink="/privacidad">Cookies</a>
         </nav>
       </div>
     </footer>
